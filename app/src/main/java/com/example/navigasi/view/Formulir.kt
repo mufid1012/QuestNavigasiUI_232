@@ -1,20 +1,24 @@
 package com.example.navigasi.view
 
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.navigasi.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormIsian(
     jenisK: List<String> = listOf("Laki-laki", "Perempuan"),
     onSubmitClick: (String, String, String) -> Unit
-){
+) {
     Scaffold(
-        modifier = Modifier,
         topBar = {
             TopAppBar(
                 title = {
@@ -28,17 +32,16 @@ fun FormIsian(
                 )
             )
         }
-    ) {
-        isiRuang ->
-
+    ) { innerPadding ->
         var nama by remember { mutableStateOf("") }
         var alamat by remember { mutableStateOf("") }
         var jenisKelamin by remember { mutableStateOf("") }
 
         Column(
             modifier = Modifier
-                .padding(paddingValues = isiRuang)
-                .fillMaxWidth(),
+                .padding(innerPadding)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -78,7 +81,7 @@ fun FormIsian(
                 }
             }
 
-            // ---- Divider merah----
+            // ---- Divider merah ----
             HorizontalDivider(
                 modifier = Modifier
                     .padding(all = 20.dp)
@@ -95,7 +98,16 @@ fun FormIsian(
                 singleLine = true,
                 modifier = Modifier.width(250.dp)
             )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            // ---- Tombol Submit ----
+            Button(
+                modifier = Modifier.width(250.dp),
+                onClick = { onSubmitClick(nama, jenisKelamin, alamat) }
+            ) {
+                Text(text = stringResource(id = R.string.submit))
+            }
         }
     }
-
 }
