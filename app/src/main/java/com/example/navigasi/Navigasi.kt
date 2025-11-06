@@ -5,7 +5,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import androidx.navigation.NavHost
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 enum class Navigasi {
@@ -16,31 +17,32 @@ enum class Navigasi {
 @Composable
 fun DataApp(
     navController: NavController = rememberNavController(),
-    modifier: Modifier
-){
-    Scaffold { isiRuang->
+    modifier: Modifier = Modifier
+) {
+    Scaffold { isiRuang ->
         NavHost(
             navController = navController,
             startDestination = Navigasi.Formulir.name,
-
-            modifier = Modifier.padding(paddingValues = isiRuang)){
-                FormIsian (
-                    //pilihanJK = JenisK.map
-                    OnSubmitBtnClick = {
-                        navController.navigate(route = Navigasi.Detail.name)
+            modifier = Modifier.padding(isiRuang)
+        ) {
+            composable(route = Navigasi.Formulir.name) {
+                FormIsian(
+                    onSubmitBtnClick = {
+                        navController.navigate(Navigasi.Detail.name)
                     }
                 )
             }
-            composable(route = Navigasi.Detail.name){
+            composable(route = Navigasi.Detail.name) {
                 TampilData(
-                    onBackBtnClick = cancelAndBackToFormulir(navController)}
+                    onBackBtnClick = {
+                        cancelAndBackToFormulir(navController)
+                    }
                 )
             }
         }
     }
 }
-private fun cancelAndBackToFormulir(
-    navController: NavController
-) {
+
+private fun cancelAndBackToFormulir(navController: NavController) {
     navController.popBackStack(route = Navigasi.Formulir.name, inclusive = false)
 }
