@@ -11,5 +11,11 @@ fun TampilData(
     alamat: String,
     onBackBtnClick: () -> Unit
 ) {
+    // items diisi dengan parameter dari FormIsian
+    val items = listOf(
+        Pair(first = stringResource(id = R.string.nama_lengkap), second = nama),
+        Pair(first = stringResource(id = R.string.jenis_kelamin), second = jenisKelamin),
+        Pair(first = stringResource(id = R.string.alamat), second = alamat)
+    )
 
 }
