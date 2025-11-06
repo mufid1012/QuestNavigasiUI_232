@@ -42,7 +42,16 @@ fun FormIsian(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            // ---- Input Nama Lengkap ----
+            OutlinedTextField(
+                value = nama,
+                onValueChange = { nama = it },
+                label = { Text(text = "Nama Lengkap") },
+                singleLine = true,
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .width(250.dp)
+            )
         }
     }
 
