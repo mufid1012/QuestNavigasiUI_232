@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.navigasi.view.FormIsian
+import com.example.navigasi.view.TampilData
 
 enum class Navigasi {
     Formulir,
@@ -16,9 +18,12 @@ enum class Navigasi {
 
 @Composable
 fun DataApp(
-    navController: NavController = rememberNavController(),
-    modifier: Modifier = Modifier
+    navController: NavHostController = rememberNavController()
 ) {
+    var nama = ""
+    var jenisKelamin = ""
+    var alamat = ""
+
     Scaffold { isiRuang ->
         NavHost(
             navController = navController,
@@ -27,13 +32,19 @@ fun DataApp(
         ) {
             composable(route = Navigasi.Formulir.name) {
                 FormIsian(
-                    onSubmitBtnClick = {
+                    onSubmitClick = { n, jk, a ->
+                        nama = n
+                        jenisKelamin = jk
+                        alamat = a
                         navController.navigate(Navigasi.Detail.name)
                     }
                 )
             }
             composable(route = Navigasi.Detail.name) {
                 TampilData(
+                    nama = nama,
+                    jenisKelamin = jenisKelamin,
+                    alamat = alamat,
                     onBackBtnClick = {
                         cancelAndBackToFormulir(navController)
                     }
@@ -43,6 +54,6 @@ fun DataApp(
     }
 }
 
-private fun cancelAndBackToFormulir(navController: NavController) {
+private fun cancelAndBackToFormulir(navController: NavHostController) {
     navController.popBackStack(route = Navigasi.Formulir.name, inclusive = false)
 }
