@@ -61,6 +61,22 @@ fun FormIsian(
                 thickness = 1.dp,
                 color = Color.Red
             )
+
+            // ---- Pilihan Jenis Kelamin ----
+            Row {
+                jenisK.forEach { item ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    ) {
+                        RadioButton(
+                            selected = (jenisKelamin == item),
+                            onClick = { jenisKelamin = item }
+                        )
+                        Text(text = item)
+                    }
+                }
+            }
         }
     }
 
